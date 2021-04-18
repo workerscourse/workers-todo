@@ -176,6 +176,14 @@ const sendEmails = async () => {
     const html = `
       <h1>Your Todos</h1>
       ${tasks.map((task) => `<p>[ ] ${task.task}</p>`).join('\n')}
+
+      <hr />
+
+      <h2>Introducing the Workers Course</h2>
+      <p>Learn how to build performant apps on the edge with
+      Cloudflare Workers, Pages, KV Store, Durable Objects and
+      more.</p>
+      <a href="https://www.workerscourse.com"><strong>Launching soon!</strong></a>
     `
 
     // Return Sendgrid email send Promise
