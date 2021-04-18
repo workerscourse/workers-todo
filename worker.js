@@ -9,6 +9,8 @@ import {
 
 import { nanoid } from 'nanoid'
 
+const TTL = 60 * 60 * 24 * 7 // Expires KV entry after 7 days
+
 const router = ThrowableRouter({ stack: true })
 
 // Sets router paths
@@ -74,7 +76,7 @@ router
       tasks.unshift(task)
 
       // Write to KV
-      await TODOS.put(email, JSON.stringify(tasks))
+      await TODOS.put(email, JSON.stringify(tasks), { expirationTtl: TTL })
 
       return json({ task })
     },
@@ -108,7 +110,7 @@ router
       tasks[index] = task
 
       // Update KV
-      await TODOS.put(email, JSON.stringify(tasks))
+      await TODOS.put(email, JSON.stringify(tasks), { expirationTtl: TTL })
 
       return json({ task })
     },
@@ -131,7 +133,7 @@ router
     tasks.splice(index, 1)
 
     // Update KV
-    await TODOS.put(email, JSON.stringify(tasks))
+    await TODOS.put(email, JSON.stringify(tasks), { expirationTtl: TTL })
 
     return json({ success: true })
   })
@@ -177,7 +179,7 @@ const sendEmails = async () => {
       <h1>Your Todos</h1>
       ${tasks.map((task) => `<p>[ ] ${task.task}</p>`).join('\n')}
       <a href="https://todo.workerscourse.com/tasks/${email}">View all tasks</a>
-      
+
       <hr />
 
       <h2>Introducing the Workers Course</h2>
