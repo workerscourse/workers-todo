@@ -29,6 +29,7 @@ router
     url.pathname = '/tasks.html'
     return fetch(url.href)
   })
+
   .get('/api/todos/:email', withParams, async ({ email }) => {
     // Get tasks from email
     const tasks = await TODOS.get(email, { type: 'json' })
@@ -38,6 +39,7 @@ router
 
     return json({ tasks })
   })
+
   .post(
     '/api/todos/:email',
     withContent,
@@ -143,69 +145,69 @@ addEventListener('fetch', (event) =>
 )
 
 // Schedule event handler
-addEventListener('scheduled', (event) =>
-  event.respondWith(async (event) => {
-    // List all todo users
-    const { keys } = await TODOS.list()
+addEventListener('scheduled', (event) => event.waitUntil(sendEmails))
 
-    // Make sure the keys are all emails
-    const emails = keys
-      .map((key) => key.name)
-      .filter((key) =>
-        key.match(
-          /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-        ),
-      )
+// Email sending function
+const sendEmails = async () => {
+  // List all todo users
+  const { keys } = await TODOS.list()
 
-    // Fetch the todos for each user
-    const promises = emails.map(async (email) => {
-      const tasks = await TODOS.get(email, { type: 'json' })
+  // Make sure the keys are all emails
+  const emails = keys
+    .map((key) => key.name)
+    .filter((key) =>
+      key.match(
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+      ),
+    )
 
-      // Only email tasks that are not finished
-      tasks.filter((task) => !task.completed)
+  // Fetch the todos for each user
+  const promises = emails.map(async (email) => {
+    const tasks = await TODOS.get(email, { type: 'json' })
 
-      if (tasks.length === 0) {
-        return Promise.resolve()
-      }
+    // Only email tasks that are not finished
+    tasks.filter((task) => !task.completed)
 
-      // Create email HTML
-      const html = `
-        <h1>Your Todos</h1>
-        ${tasks.map((task) => `<p>[ ] ${task.task}</p>`).join('\n')}
-      `
+    if (tasks.length === 0) {
+      return Promise.resolve()
+    }
 
-      // Return Sendgrid email send Promise
-      return fetch('https://api.sendgrid.com/v3/mail/send', {
-        method: 'POST',
-        headers: {
-          authorization: `Bearer ${SENDGRID_KEY}`,
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          personalizations: [
-            {
-              to: [
-                {
-                  email,
-                },
-              ],
-            },
-          ],
-          from: {
-            email: 'noreply@workerscourse.com',
+    // Create email HTML
+    const html = `
+      <h1>Your Todos</h1>
+      ${tasks.map((task) => `<p>[ ] ${task.task}</p>`).join('\n')}
+    `
+
+    // Return Sendgrid email send Promise
+    return fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${SENDGRID_KEY}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        personalizations: [
+          {
+            to: [
+              {
+                email,
+              },
+            ],
           },
-          subject: 'Your Workers Todos',
-          content: [
-            {
-              type: 'text/html',
-              value: html,
-            },
-          ],
-        }),
-      })
+        ],
+        from: {
+          email: 'noreply@workerscourse.com',
+        },
+        subject: 'Your Workers Todos',
+        content: [
+          {
+            type: 'text/html',
+            value: html,
+          },
+        ],
+      }),
     })
+  })
 
-    // Wait for all Promises to complete
-    event.waitUntil(Promise.all(promises))
-  }),
-)
+  return Promise.all(promises)
+}

@@ -7,3 +7,6 @@ zone_id = "a0c09ac17badf0cd25bd0ff17cd3dcf9"
 kv_namespaces = [
   { binding = "TODOS", id = "72ac40f9d242438886d6c874339d8c6c" },
 ]
+
+[triggers]
+crons = ["0 12 * * *"]
