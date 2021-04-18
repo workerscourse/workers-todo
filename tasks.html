@@ -118,7 +118,7 @@
       function data() {
         return {
           newTask: '',
-          email: new URL(location).pathname.substr(1),
+          email: new URL(location).pathname.replace('/tasks/', ''),
           tasks: [],
           getTasks() {
             fetch(`/api/todos/${this.email}`)
