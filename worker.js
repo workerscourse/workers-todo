@@ -178,7 +178,7 @@ const sendEmails = async () => {
     const html = `
       <h1>Your Todos</h1>
       ${tasks.map((task) => `<p>[ ] ${task.task}</p>`).join('\n')}
-      <a href="https://todo.workerscourse.com/tasks/${email}">View all tasks</a>
+      <p><a href="https://todo.workerscourse.com/tasks/${email}">View all tasks</a></p>
 
       <hr />
 
@@ -186,7 +186,7 @@ const sendEmails = async () => {
       <p>Learn how to build performant apps on the edge with
       Cloudflare Workers, Pages, KV Store, Durable Objects and
       more.</p>
-      <a href="https://www.workerscourse.com"><strong>Launching soon!</strong></a>
+      <h3><a href="https://www.workerscourse.com"><strong>Launching soon!</strong></a></h3>
     `
 
     // Return Sendgrid email send Promise
