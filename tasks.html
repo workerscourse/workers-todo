@@ -86,7 +86,7 @@
                             @blur="editTask(task.id, task.task)"
                             @keyup.enter="$event.target.blur()"
                           />
-                          <button @click="deleteTask(task.id)">🗑</button>
+                          <button @click="deleteTask(task.id, index)">🗑</button>
                         </div>
                       </template>
                       <template x-if="tasks.length === 0">

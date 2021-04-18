@@ -164,6 +164,10 @@ addEventListener('scheduled', (event) =>
       // Only email tasks that are not finished
       tasks.filter((task) => !task.completed)
 
+      if (tasks.length === 0) {
+        return Promise.resolve()
+      }
+
       // Create email HTML
       const html = `
         <h1>Your Todos</h1>
