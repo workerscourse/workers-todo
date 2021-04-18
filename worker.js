@@ -163,10 +163,10 @@ const sendEmails = async () => {
 
   // Fetch the todos for each user
   const promises = emails.map(async (email) => {
-    const tasks = await TODOS.get(email, { type: 'json' })
+    let tasks = await TODOS.get(email, { type: 'json' })
 
     // Only email tasks that are not finished
-    tasks.filter((task) => !task.completed)
+    tasks = tasks.filter((task) => !task.completed)
 
     if (tasks.length === 0) {
       return Promise.resolve()
