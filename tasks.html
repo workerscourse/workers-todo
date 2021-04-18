@@ -66,7 +66,7 @@
                 <div class="mt-1 bg-white overflow-hidden shadow rounded-lg">
                   <div class="px-4 py-5 sm:p-6">
                     <div class="space-y-4 -mt-4">
-                      <template x-for="task in tasks">
+                      <template x-for="(task, index) in tasks">
                         <div class="flex space-x-4 items-center">
                           <!-- Text input -->
                           <input
@@ -86,6 +86,7 @@
                             @blur="editTask(task.id, task.task)"
                             @keyup.enter="$event.target.blur()"
                           />
+                          <button @click="deleteTask(task.id)">🗑</button>
                         </div>
                       </template>
                       <template x-if="tasks.length === 0">
@@ -161,6 +162,12 @@
               headers: {
                 'content-type': 'application/json',
               },
+            })
+          },
+          deleteTask(id, index) {
+            this.tasks.splice(index, 1)
+            fetch(`/api/todos/${this.email}/${id}`, {
+              method: 'DELETE',
             })
           },
         }

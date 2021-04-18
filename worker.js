@@ -112,32 +112,27 @@ router
     },
   )
 
-  .delete(
-    '/api/todos/:email/:id',
-    withContent,
-    withParams,
-    async ({ email, id, content }) => {
-      // Get tasks
-      const tasks = await TODOS.get(email, { type: 'json' })
-      if (!tasks) {
-        missing('Email not found')
-      }
+  .delete('/api/todos/:email/:id', withParams, async ({ email, id }) => {
+    // Get tasks
+    const tasks = await TODOS.get(email, { type: 'json' })
+    if (!tasks) {
+      missing('Email not found')
+    }
 
-      // Get task index
-      const index = tasks.findIndex((task) => task.id === id)
-      if (index === -1) {
-        return missing('Task not found')
-      }
+    // Get task index
+    const index = tasks.findIndex((task) => task.id === id)
+    if (index === -1) {
+      return missing('Task not found')
+    }
 
-      // Delete task
-      tasks.splice(index, 1)
+    // Delete task
+    tasks.splice(index, 1)
 
-      // Update KV
-      await TODOS.put(email, JSON.stringify(tasks))
+    // Update KV
+    await TODOS.put(email, JSON.stringify(tasks))
 
-      return json({ success: true })
-    },
-  )
+    return json({ success: true })
+  })
 
   // Fetch all non-matched routes from static hosting
   .all('*', ({ url }) => fetch(url))
