@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workers Quiz</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.1/dist/alpine.min.js"
+      defer
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/base.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/components.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@tailwindcss/typography@0.4.0/dist/typography.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@tailwindcss/forms@0.2.1/dist/forms.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/utilities.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="min-h-screen bg-gray-50" x-data="{}">
+      <main class="py-6 lg:py-8">
+        <!-- Hero card -->
+        <div>
+          <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="relative shadow-xl rounded-2xl overflow-hidden">
+              <div class="absolute inset-0">
+                <img class="h-full w-full object-cover" src="blob.svg" />
+              </div>
+              <div
+                class="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8"
+              >
+                <h1
+                  class="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
+                >
+                  <span class="block text-black text-opacity-80">Workers</span>
+                  <span class="block text-white">Todos</span>
+                </h1>
+                <p
+                  class="mt-6 max-w-lg mx-auto text-center text-xl text-black text-opacity-70 sm:max-w-3xl"
+                >
+                  Powered by KV Store and HTMLRewriter
+                </p>
+                <div
+                  class="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center"
+                >
+                  <div
+                    class="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5"
+                  >
+                    <a
+                      @click="
+                        const email = prompt('Enter your email address');
+                        if(email) {
+                            window.location = new URL(window.location).origin + '/' + email
+                        }
+                      "
+                      href="#"
+                      class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-black text-opacity-90 bg-white hover:bg-opacity-80 sm:px-8"
+                    >
+                      My tasks
+                    </a>
+                    <a
+                      href="https://github.com/workerscourse/workers-quiz"
+                      class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-black bg-opacity-90 hover:bg-opacity-70 sm:px-8"
+                      target="_blank"
+                    >
+                      View on GitHub
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
