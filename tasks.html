@@ -117,109 +117,54 @@
     <script>
       function data() {
         return {
-          newTask: "",
+          newTask: '',
           email: new URL(location).pathname.substr(1),
           tasks: [],
           getTasks() {
-            fetch(
-              `https://todo.workerscourse.workers.dev/api/todos/${this.email}`
-            )
+            fetch(`/api/todos/${this.email}`)
               .then((res) => res.json())
               .then((data) => {
-                this.tasks = data.tasks;
-              });
+                this.tasks = data.tasks
+              })
           },
           createTask(task) {
             if (task) {
-              fetch(
-                `https://todo.workerscourse.workers.dev/api/todos/${this.email}`,
-                {
-                  method: "POST",
-                  body: JSON.stringify({ task }),
-                  headers: {
-                    "content-type": "application/json",
-                  },
-                }
-              )
+              fetch(`/api/todos/${this.email}`, {
+                method: 'POST',
+                body: JSON.stringify({ task }),
+                headers: {
+                  'content-type': 'application/json',
+                },
+              })
                 .then((res) => res.json())
                 .then((data) => {
-                  this.tasks.unshift(data.task);
-                });
-              this.newTask = "";
+                  this.tasks.unshift(data.task)
+                })
+              this.newTask = ''
             }
           },
           editTask(id, task) {
             if (task) {
-              fetch(
-                `https://todo.workerscourse.workers.dev/api/todos/${this.email}/${id}`,
-                {
-                  method: "PATCH",
-                  body: JSON.stringify({ task }),
-                  headers: {
-                    "content-type": "application/json",
-                  },
-                }
-              );
+              fetch(`/api/todos/${this.email}/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify({ task }),
+                headers: {
+                  'content-type': 'application/json',
+                },
+              })
             }
           },
           completeTask(id, completed) {
-            fetch(
-              `https://todo.workerscourse.workers.dev/api/todos/${this.email}/${id}`,
-              {
-                method: "PATCH",
-                body: JSON.stringify({ completed }),
-                headers: {
-                  "content-type": "application/json",
-                },
-              }
-            );
+            fetch(`/api/todos/${this.email}/${id}`, {
+              method: 'PATCH',
+              body: JSON.stringify({ completed }),
+              headers: {
+                'content-type': 'application/json',
+              },
+            })
           },
-        };
+        }
       }
-
-      //   function createTask() {
-      //     if (newTask) {
-      //       fetch(`https://todo.workerscourse.workers.dev/api/todos/${email}`, {
-      //         method: "POST",
-      //         body: JSON.stringify({ task: newTask }),
-      //         headers: {
-      //           "content-type": "application/json",
-      //         },
-      //       })
-      //         .then((res) => res.json())
-      //         .then((data) => {
-      //           tasks.unshift(data.task);
-      //         });
-      //       newTask = "";
-      //     }
-      //   }
-      //   editTask = (id, edit) => {
-      //     console.log(id, edit);
-      //     if (edit) {
-      //       fetch(
-      //         `https://todo.workerscourse.workers.dev/api/todos/${this.email}/${id}`,
-      //         {
-      //           method: "PATCH",
-      //           body: JSON.stringify({ task: edit }),
-      //           headers: {
-      //             "content-type": "application/json",
-      //           },
-      //         }
-      //       );
-      //     }
-      //   };
-      //   window.completeTask = (id, completed) => {
-      //     fetch(
-      //       `https://todo.workerscourse.workers.dev/api/todos/${email}/${id}`,
-      //       {
-      //         method: "PATCH",
-      //         body: JSON.stringify({ completed }),
-      //         headers: {
-      //           "content-type": "application/json",
-      //         },
-      //       }
-      //     );
-      //   };
     </script>
   </body>
 </html>
