@@ -176,7 +176,8 @@ const sendEmails = async () => {
     const html = `
       <h1>Your Todos</h1>
       ${tasks.map((task) => `<p>[ ] ${task.task}</p>`).join('\n')}
-
+      <a href="https://todo.workerscourse.com/tasks/${email}">View all tasks</a>
+      
       <hr />
 
       <h2>Introducing the Workers Course</h2>
