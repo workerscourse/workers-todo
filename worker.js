@@ -145,7 +145,7 @@ addEventListener('fetch', (event) =>
 )
 
 // Schedule event handler
-addEventListener('scheduled', (event) => event.waitUntil(sendEmails))
+addEventListener('scheduled', (event) => event.waitUntil(sendEmails()))
 
 // Email sending function
 const sendEmails = async () => {
