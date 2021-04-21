@@ -15,23 +15,6 @@ const router = ThrowableRouter({ stack: true })
 
 // Sets router paths
 router
-  .get('/tasks/:email', withParams, ({ url, email }) => {
-    url = new URL(url)
-
-    // Check if email valid
-    if (
-      !email.match(
-        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-      )
-    ) {
-      return Response.redirect(url.origin, 302)
-    }
-
-    // Fetch tasks html
-    url.pathname = '/tasks.html'
-    return fetch(url.href)
-  })
-
   .get('/api/todos/:email', withParams, async ({ email }) => {
     // Get tasks from email
     const tasks = await TODOS.get(email, { type: 'json' })
@@ -139,7 +122,7 @@ router
   })
 
   // Fetch all non-matched routes from static hosting
-  .all('*', ({ url }) => fetch(url))
+  .all('*', () => missing('404 Not Found'))
 
 // Fetch event handler
 addEventListener('fetch', (event) =>

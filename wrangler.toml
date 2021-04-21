@@ -1,7 +1,7 @@
 name = "workers-todo"
 type = "webpack"
 account_id = "ad449a4ec14f68167d9fdacdf1f9bbca"
-routes = ["todo.workerscourse.com/api/*", "todo.workerscourse.com/tasks/*"]
+route = "todo.workerscourse.com/api/*"
 zone_id = "a0c09ac17badf0cd25bd0ff17cd3dcf9"
 
 kv_namespaces = [

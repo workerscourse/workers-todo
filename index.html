@@ -5,10 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Workers Todos</title>
-    <script
-      src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.1/dist/alpine.min.js"
-      defer
-    ></script>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/base.min.css"
       rel="stylesheet"
@@ -31,7 +27,7 @@
     />
   </head>
   <body>
-    <div class="min-h-screen bg-gray-50" x-data="{}">
+    <div class="min-h-screen bg-gray-50">
       <main class="py-6 lg:py-8 space-y-8">
         <!-- Hero card -->
         <div>
@@ -57,21 +53,26 @@
                 <div
                   class="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center"
                 >
-                  <div
+                  <form
+                    action="/tasks"
+                    method="GET"
                     class="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5"
                   >
-                    <a
-                      @click="
-                        const email = prompt('Enter your email address');
-                        if(email) {
-                            window.location = new URL(window.location).origin + '/tasks/' + email
-                        }
-                      "
-                      href="#"
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autocomplete="email"
+                      required
+                      class="w-full col-span-2 px-5 py-3 placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                      placeholder="Enter your email"
+                    />
+                    <button
+                      type="submit"
                       class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-black text-opacity-90 bg-white hover:bg-opacity-80 sm:px-8"
                     >
                       My tasks
-                    </a>
+                    </button>
                     <a
                       href="https://github.com/workerscourse/workers-todo"
                       class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-black bg-opacity-90 hover:bg-opacity-70 sm:px-8"
@@ -79,7 +80,7 @@
                     >
                       View on GitHub
                     </a>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
