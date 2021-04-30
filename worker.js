@@ -118,7 +118,7 @@ router
     return json({ success: true })
   })
 
-  // Fetch all non-matched routes from static hosting
+  // Return 404 for all other routes
   .all('*', () => missing('404 Not Found'))
 
 // Fetch event handler
