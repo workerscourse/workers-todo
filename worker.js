@@ -17,10 +17,7 @@ const router = ThrowableRouter({ stack: true })
 router
   .get('/api/todos/:email', withParams, async ({ email }) => {
     // Get tasks from email
-    const tasks = await TODOS.get(email, { type: 'json' })
-    if (!tasks) {
-      return missing('Email not found')
-    }
+    const tasks = (await TODOS.get(email, { type: 'json' })) || []
 
     return json({ tasks })
   })
